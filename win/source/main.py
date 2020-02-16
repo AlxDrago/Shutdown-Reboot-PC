@@ -1,20 +1,25 @@
-import sys
-from PyQt5 import QtWidgets
-import des3, re, datetime, subprocess
+# -*- coding: utf-8 -*-
+
+import sys 
+from PyQt5 import QtWidgets 
+from PyQt5 import  QtGui
+import design as des3 
+import re, datetime, subprocess
 
 class App(QtWidgets.QMainWindow, des3.Ui_MainWindow):
     def __init__(self):
-        super().__init__()
+        super(App, self).__init__()
         self.setupUi(self)
         self.textEdit.setText('25')
         self.hourInput.setText('18')
         self.minuteInput.setText('00')
+        self.setWindowIcon(QtGui.QIcon('shut.ico'))
         self.startBtn.clicked.connect(self.start)
         self.stopBtn.clicked.connect(self.stop)
         self.checkTimeShut.stateChanged.connect(self.checkHour)
         self.checkHour()
 
-    #Метод проверки выключения по минутам или по часам
+    # Метод проверки выключения по минутам или по часам
     def checkHour(self):
         global hour
         if self.checkTimeShut.checkState() != 0:
@@ -60,12 +65,15 @@ class App(QtWidgets.QMainWindow, des3.Ui_MainWindow):
         self.startNow()
 
     def startNow(self):
+        dateNow = datetime.timedelta(hours = datetime.datetime.now().hour, minutes = datetime.datetime.now().minute)
+        timeShut = datetime.timedelta(minutes= int(time))
+
         subprocess.call('shutdown -t ' + str(int(time) * 60) + reboot, shell=True)
         shutText = 'Выключение PC: '
         if re.search('-r', reboot) != None:
             shutText = 'Перезагрузка PC: '
         if hour == False:
-            self.label.setText(shutText + str(time) + ' мин')
+            self.label.setText(shutText + str(dateNow + timeShut) )
         else:
             self.label.setText(shutText + str(hourShut + ' : ' + minuteShut) + ' мин')
 

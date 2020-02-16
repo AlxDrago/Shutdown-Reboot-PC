@@ -1,8 +1,13 @@
+#Shutdown Timer
+
 Программа с графическим интерфейсом пользователя для установки таймера отключения/перезагрузки PC одним щелчком мыши для Windows и Linux
 ****************************************************************
 GUI program for setting a one-click off / restart timer for Windows and Linux
 
-Установка и работа: 
+# Установка и работа: 
+Для сборки .exe запускать из под Windows или wine:
+pyinstaller -F -w -i shut.ico main.py
+
 Windows: ( проверено на windows 7, vista, 10)
 1) Запустить Shutdown.exe
 2) Указать время выключения, нажать "Включить таймер"
